@@ -1,0 +1,14 @@
+/* Write your T-SQL query statement below */
+with D as (
+select customer_id,
+delivery_id,
+order_date,
+customer_pref_delivery_date,
+ROW_NUMBER() OVER(PARTITION BY customer_id ORDER BY order_date asc) as rank_n
+from Delivery)
+
+select
+ROUND(SUM(CASE WHEN D.order_date = D.customer_pref_delivery_date THEN 1 ELSE 0 END) * 100.0 / COUNT(1) , 2) as immediate_percentage
+from D
+where
+D.rank_n = 1
