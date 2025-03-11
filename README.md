@@ -1,9 +1,19 @@
 # LeetCode
 
-This repository contains my solutions to LeetCode problems.
+This repository contains my solutions to LeetCode problems, plan is to finish the following playlists by EOY
+
+Leetcode SQL 50
+Leetcode Advanced SQL 50
+Introduction to Pandas
+30 Days of Pandas
+Leetcode 75
 
 Created with :heart: by [LeetPush](https://github.com/husamahmud/LeetPush)
 
+ 
+ 
+ 
+ 
  ## Made by 
  - Tut: [GitHub](https://github.com/TutTrue) - [LinkedIn](https://www.linkedin.com/in/mahmoud-hamdy-8b6825245/)
  - Hüsam: [GitHub](https://github.com/husamahmud) - [LinkedIn](https://www.linkedin.com/in/husamahmud/)
