@@ -1,0 +1,19 @@
+/* Write your T-SQL query statement below */
+/*with A as (
+SELECT SUM(CASE WHEN R.player_id IS NOT NULL THEN 1.0 ELSE 0.0 END) as log_cnt
+from Activity L
+left join Activity R on L.player_id = R.player_id and DATEADD(day,1,L.event_date) = R.event_date
+group by L.player_id)
+
+Select ROUND(SUM(CASE WHEN log_cnt > 0 THEN 1 ELSE 0 END) * 1.0/COUNT(1),2) as fraction
+from A */
+with min_p as (
+SELECT player_id, MIN(event_date) as min_date
+from Activity
+group by player_id)
+
+SELECT ROUND(SUM(CASE WHEN R.player_id IS NOT NULL THEN 1.0 ELSE 0.0 END) / COUNT(1),2) as fraction
+from min_p L
+left join Activity R on L.player_id = R.player_id and DATEADD(day,1,L.min_date) = R.event_date
+
+
