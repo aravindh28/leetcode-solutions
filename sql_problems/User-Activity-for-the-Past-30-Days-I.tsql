@@ -1,0 +1,6 @@
+/* Write your T-SQL query statement below */
+
+select A.activity_date as day, count(distinct A.user_id) as active_users
+from Activity A
+where A.activity_date >= DATEADD(day, -29, '2019-07-27') and A.activity_date <= '2019-07-27'
+group by A.activity_date
