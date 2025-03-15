@@ -1,0 +1,28 @@
+/* Write your T-SQL query statement below */
+
+/*
+SELECT employee_id,
+department_id
+from Employee E
+where primary_flag ='Y'
+
+UNION
+
+SELECT employee_id,
+department_id
+from Employee M
+group by employee_id, d
+HAVING COUNT(department_id) = 1
+
+*/
+with t as (
+SELECT employee_id,
+department_id,
+primary_flag,
+COUNT(1) OVER (PARTITION BY employee_id) as cnt
+from Employee M)
+
+SELECT employee_id,
+department_id
+from t
+where cnt = 1 or (cnt > 1 and primary_flag='Y')
