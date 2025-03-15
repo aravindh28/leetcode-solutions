@@ -1,0 +1,17 @@
+/* Write your T-SQL query statement below */
+/*SELECT
+num,
+MAX(id) OVER (PARTITION BY num) - MIN(id) OVER (PARTITION BY num) as diff
+from Logs */
+
+with t as (
+SELECT id,
+num,
+LEAD(id,2) OVER (PARTITION by num ORDER by id) as third
+from Logs)
+
+SELECT
+num as ConsecutiveNums
+from t
+where third - id = 2
+group by num
