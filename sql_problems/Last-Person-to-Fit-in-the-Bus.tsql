@@ -1,0 +1,16 @@
+/* Write your T-SQL query statement below */
+with rsum as (
+SELECT turn,
+person_id,
+person_name,
+weight,
+SUM(weight) OVER (order by turn asc) as rsum_wt
+    from Queue)
+
+, l_rsum as (
+    SELECT *, lead(rsum_wt,1) OVER (ORDER BY turn) as rsum_wt_next
+    from rsum
+)
+
+SELECT person_name from l_rsum
+where rsum_wt <=1000 and (rsum_wt_next >1000 or rsum_wt_next IS NULL)
