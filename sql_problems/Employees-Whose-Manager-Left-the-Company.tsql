@@ -1,0 +1,19 @@
+/* Write your T-SQL query statement below */
+
+with sal_less as (
+    SELECT employee_id,
+    manager_id
+        FROM Employees
+        where salary < 30000
+),
+manager_left as (
+    SELECT A.manager_id from Employees A
+    left join Employees B on A.manager_id = B.employee_id
+    where A.manager_id IS NOT NULL AND B.employee_id IS NULL
+)
+
+--select * from manager_left
+
+SELECT S.employee_id from sal_less S
+inner join manager_left M on S.manager_id = M.manager_id
+group by S.employee_id
