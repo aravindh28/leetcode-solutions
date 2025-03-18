@@ -2,6 +2,9 @@
 
 This repository contains my solutions to LeetCode problems.
 
+Currently completing
+- Leetcode SQL 50
+
 Created with :heart: by [LeetPush](https://github.com/husamahmud/LeetPush)
 
  ## Made by 
