@@ -8,15 +8,26 @@ with max_date_price as (
     where change_date <= '2019-08-16'
     --having change_date = MAX(change_date)
 ),
-FUniq as (select product_id, new_price as price from max_date_price
-where rn=1),
-PUniq as (select distinct product_id from Products)
 
-SELECT product_id, new_price as price from max_date_price
-where rn=1
+FUniq as 
+(select product_id, 
+new_price as price 
+    from max_date_price
+    where rn=1),
+
+PUniq as 
+(select distinct product_id
+    from Products)
+
+SELECT product_id, 
+new_price as price 
+    from max_date_price
+    where rn=1
 
 UNION
 
-select P.product_id, 10 as price from Puniq P
-LEFT JOIN FUniq F on P.product_id = F.product_id
-where F.product_id IS NULL
+SELECT P.product_id,
+10 as price 
+    from Puniq P
+        LEFT JOIN FUniq F on P.product_id = F.product_id
+    where F.product_id IS NULL
