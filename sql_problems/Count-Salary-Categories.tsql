@@ -1,0 +1,32 @@
+/* Write your T-SQL query statement below */
+
+with acc_1 as (
+
+SELECT
+CASE WHEN income < 20000 THEN 'Low Salary'
+     WHEN income >= 20000 AND income <=50000 THEN 'Average Salary'
+     WHEN income >50000 THEN 'High Salary' END as category,
+COUNT(1) as accounts_count
+from Accounts
+    group by 
+     CASE WHEN income < 20000 THEN 'Low Salary'
+     WHEN income >= 20000 AND income <=50000 THEN 'Average Salary'
+     WHEN income >50000 THEN 'High Salary' END
+),
+dummy as (
+        SELECT 'Low Salary' as category, 0 as accounts_count 
+    UNION
+        SELECT 'Average Salary' as category, 0 as accounts_count
+    UNION
+        SELECT 'High Salary' as category, 0 as accounts_count
+
+),
+sum_acc as (
+    SELECT * from acc_1
+    UNION
+    SELECT * from dummy
+)
+
+SELECT category, SUM(accounts_count) as accounts_count
+from sum_acc
+group by category
