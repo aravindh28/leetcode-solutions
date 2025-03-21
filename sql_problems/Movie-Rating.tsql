@@ -1,0 +1,15 @@
+-- Write your MySQL query statement below
+
+SELECT U.name as results from Users U
+WHERE U.user_id = 
+(SELECT TOP 1 M.user_id 
+    from MovieRating M  
+        inner join Users U on U.user_id = M.user_id 
+    group by M.user_id, U.name 
+    ORDER BY COUNT(M.movie_id) desc, U.name)
+
+union all
+
+SELECT title as results from Movies
+WHERE movie_id = (SELECT TOP 1 MR.movie_id from MovieRating MR inner join Movies M on MR.movie_id = M.movie_id where YEAR(MR.created_at) = 2020 AND MONTH(MR.created_at) = 2 group by MR.movie_id, M.title ORDER BY AVG(rating * 1.0) desc, M.title asc)
+
