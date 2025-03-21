@@ -1,0 +1,8 @@
+/* Write your T-SQL query statement below */
+
+SELECT id,
+CASE WHEN (id % 2 = 0 AND lead(student,1) OVER ( ORDER BY id asc) IS NULL) THEN lag(student,1) OVER ( ORDER BY id asc)
+WHEN (id % 2 = 1 AND lead(student,1) OVER ( ORDER BY id asc) IS NULL) THEN student
+WHEN (id% 2 =0) THEN lag(student,1) OVER ( ORDER BY id asc) 
+WHEN (id% 1 =0) THEN lead(student,1) OVER ( ORDER BY id asc) END as student
+from Seat
