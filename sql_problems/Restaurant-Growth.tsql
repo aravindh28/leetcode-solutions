@@ -1,10 +1,13 @@
 /* Write your T-SQL query statement below */
-with sale_p_day as (SELECT visited_on, SUM(amount) as amount
+with sale_p_day as (SELECT visited_on, 
+SUM(amount) as amount
 From Customer
 group by visited_on)
 
 
-SELECT visited_on, SUM(amount) OVER (ORDER BY visited_on ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) as amount, ROUND(AVG(1.0*amount) OVER (ORDER BY visited_on ROWS BETWEEN 6 PRECEDING AND CURRENT ROW ),2) as average_amount
+SELECT visited_on, 
+SUM(amount) OVER (ORDER BY visited_on ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) as amount,
+ROUND(AVG(1.0*amount) OVER (ORDER BY visited_on ROWS BETWEEN 6 PRECEDING AND CURRENT ROW ),2) as average_amount
 from sale_p_day
 order by visited_on
 OFFSET 6 ROWS
