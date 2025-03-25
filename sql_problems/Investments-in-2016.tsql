@@ -1,0 +1,13 @@
+/* Write your T-SQL query statement below */
+with U as (
+SELECT A.pid,
+--B.pid as pid2, 
+AVG(A.tiv_2016*1.0) as av_1
+FROM Insurance A
+inner join Insurance B
+on A.pid != B.pid AND A.tiv_2015 = B.tiv_2015 AND NOT (A.lat = B.lat AND A.lon = B.lon)
+where NOT EXISTS (select 1 from Insurance I where A.pid!=I.pid and (A.lat=I.lat AND A.lon = I.lon))
+group by A.pid
+)
+
+select ROUND(SUM(av_1),2) as tiv_2016 from U
