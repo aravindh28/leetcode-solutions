@@ -1,0 +1,10 @@
+/* Write your T-SQL query statement below */
+with U as (
+select requester_id, accepter_id from RequestAccepted
+UNION ALL
+select accepter_id as requester_id, requester_id as accepter_id from RequestAccepted
+)
+
+select top 1 U.requester_id as id, count(1) as num from U
+group by U.requester_id
+order by num desc
