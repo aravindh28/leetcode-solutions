@@ -1,0 +1,15 @@
+/* Write your T-SQL query statement below */
+with U as (
+SELECT D.name as Department,
+E.name as Employee,
+E.salary as Salary,
+DENSE_RANK() OVER (PARTITION BY E.departmentId ORDER BY E.salary desc) as rn
+from Employee E
+    inner join Department D on E.departmentId = D.id
+)
+
+SELECT Department,
+Employee,
+Salary
+from U
+where rn in (1,2,3)
