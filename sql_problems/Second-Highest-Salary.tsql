@@ -1,0 +1,8 @@
+WITH U as (
+SELECT id, salary, DENSE_RANK() OVER ( ORDER BY salary desc) as rn
+from Employee)
+
+
+SELECT MAX(U.salary) as SecondHighestSalary
+From U
+where U.rn = 2
