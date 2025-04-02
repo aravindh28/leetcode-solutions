@@ -1,0 +1,26 @@
+/* Write your T-SQL query statement below */
+with A as (
+select match_id, 
+host_team, 
+host_goals, 
+guest_goals
+from Matches 
+
+union all
+
+select
+match_id,
+guest_team as host_team,
+guest_goals as host_goals,
+host_goals as guest_goals
+from Matches)
+
+select T.team_id,
+T.team_name, 
+SUM(CASE WHEN A.host_goals > A.guest_goals THEN 3
+WHEN A.host_goals = A.guest_goals THEN 1
+WHEN A.host_goals < A.guest_goals THEN 0 ELSE 0 END) as num_points
+from A
+    right join Teams T on T.team_id = A.host_team
+    group by T.team_id, T.team_name
+order by num_points desc, T.team_id asc
