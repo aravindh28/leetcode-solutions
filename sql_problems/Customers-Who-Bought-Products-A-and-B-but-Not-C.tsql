@@ -1,19 +1,11 @@
 /* Write your T-SQL query statement below */
 
-with C as (
-    select customer_id from Orders O
-    where product_name ='C'
-    group by customer_id
-)
+SELECT C.customer_id, C.customer_name
+from Customers C
+left join Orders O on O.customer_id = C.customer_id
+group by C.customer_id, C.customer_name
+    having SUM(CASE WHEN product_name = 'A' THEN 1 ELSE 0 END) > 0 AND
+    SUM(CASE WHEN product_name = 'B' THEN 1 ELSE 0 END) > 0 AND
+    SUM(CASE WHEN product_name = 'C' THEN 1 ELSE 0 END) = 0 
+order by C.customer_id
 
-SELECT A.customer_id, Cu.customer_name
-from Orders A
-    inner join Orders B 
-    on A.customer_id = B.customer_id AND A.product_name ='A' AND
-    B.product_name ='B'
-    left join C on C.customer_id = A.customer_id
-    inner join Customers Cu on
-    Cu.customer_id = A.customer_id
-where C.customer_id is NULL
-group by A.customer_id, Cu.customer_name
---WHERE NOT EXISTS (SELECT 1 from Orders C where C.customer_id = A.customer_id AND product_name != 'C')
