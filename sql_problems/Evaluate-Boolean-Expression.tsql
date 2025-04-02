@@ -1,0 +1,13 @@
+/* Write your T-SQL query statement below */
+
+select E.left_operand, 
+E.operator, 
+E.right_operand,
+CASE WHEN E.operator ='>' AND V.value > V2.value THEN 'true'
+WHEN E.operator= '<' AND V.value < V2.value THEN 'true'
+WHEN E.operator= '=' AND V.value = V2.value THEN 'true' ELSE 'false' END as value
+from Expressions E
+    inner join Variables V on
+    E.left_operand = V.name
+    inner join Variables V2 on 
+    E.right_operand = V2.name
