@@ -1,0 +1,13 @@
+/* Write your T-SQL query statement below */
+WITH U as
+(SELECT student_id,
+course_id,
+grade,
+ROW_NUMBER() OVER (PARTITION BY student_id ORDER BY grade desc, course_id asc) as rn
+from Enrollments)
+
+SELECT student_id,
+course_id,
+grade
+from U
+    where rn = 1
