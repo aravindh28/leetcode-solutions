@@ -1,0 +1,16 @@
+/* Write your T-SQL query statement below */
+SELECT user_id,
+name,
+mail
+    from Users
+    WHERE 
+    -- Make sure the email contains '@'
+    CHARINDEX('@', mail) > 0
+
+    -- Ensure domain is exactly 'leetcode.com'
+    AND RIGHT(mail, LEN(mail) - CHARINDEX('@', mail)) = 'leetcode.com'
+
+    AND LEFT(mail, 1) LIKE '[a-zA-Z]'
+    
+    -- Get the prefix (left of @) and check:
+    AND PATINDEX('%[^a-zA-Z0-9._-]%', LEFT(mail, CHARINDEX('@', mail) - 1)) = 0
