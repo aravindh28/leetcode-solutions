@@ -1,0 +1,7 @@
+/* Write your T-SQL query statement below */
+
+select S.seller_name
+from Seller S
+left join Orders O on O.seller_id = S.seller_id AND YEAR(O.sale_date) = 2020
+where O.seller_id IS NULL
+group by S.seller_name
