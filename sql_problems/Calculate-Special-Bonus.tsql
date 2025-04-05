@@ -3,4 +3,4 @@
 SELECT E.employee_id,
 CASE WHEN E.employee_id%2 = 1 AND E.name NOT LIKE 'M%' THEN E.salary ELSE 0 END as bonus
 from Employees E
-order by employee_id
+order by E.employee_id
