@@ -1,0 +1,17 @@
+/* Write your T-SQL query statement below */
+
+with U as (
+SELECT S.sales_id
+from SalesPerson S
+inner join
+Orders O on
+O.sales_id = S.sales_id
+inner join
+Company C on C.com_id = O.com_id
+where C.name = 'RED'
+group by S.sales_id
+)
+
+Select name from SalesPerson S
+left join U on U.sales_id = S.sales_id
+where U.sales_id is NULL
