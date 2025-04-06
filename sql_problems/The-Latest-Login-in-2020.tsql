@@ -1,0 +1,12 @@
+/* Write your T-SQL query statement below */
+
+with U as (
+select user_id,
+time_stamp,
+ROW_NUMBER() OVER (PARTITION BY user_id order by time_stamp desc) as rn
+from Logins
+where YEAR(time_stamp) = 2020)
+
+select user_id,
+time_stamp as last_stamp from U
+where rn=1
