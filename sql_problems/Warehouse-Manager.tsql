@@ -1,0 +1,9 @@
+/* Write your T-SQL query statement below */
+
+SELECT W.name as warehouse_name,
+SUM(P.Width * P.Length * P.Height * W.units) as volume
+from Warehouse W
+    inner join Products P on
+    W.product_id = P.product_id
+
+    GROUP BY W.name
