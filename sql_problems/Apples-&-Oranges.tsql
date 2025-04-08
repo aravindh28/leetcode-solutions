@@ -1,0 +1,15 @@
+/* Write your T-SQL query statement below */
+
+with U as (
+SELECT S.sale_date,
+S.fruit,
+S.sold_num,
+S2.fruit as f2,
+S2.sold_num as s2
+from Sales S
+inner join Sales S2 on S.sale_date = S2.sale_date AND S.fruit = 'apples' AND S2.fruit = 'oranges'
+)
+
+select sale_date,
+sold_num - s2 as diff
+from U
