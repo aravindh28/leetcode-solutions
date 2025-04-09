@@ -1,0 +1,20 @@
+/* Write your T-SQL query statement below */
+with tot as (
+select C.from_id,
+C.to_id,
+C.duration from Calls C
+
+union all
+
+select C2.to_id as from_id,
+C2.from_id as to_id,
+C2.duration from Calls C2
+)
+
+select from_id as person1,
+to_id as person2,
+COUNT(1) as call_count,
+SUM(duration) as total_duration
+from tot
+where from_id < to_id
+group by from_id, to_id
