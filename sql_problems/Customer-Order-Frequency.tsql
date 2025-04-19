@@ -1,0 +1,25 @@
+/* Write your T-SQL query statement below */
+with A as (
+SELECT
+C.customer_id,
+C.name,
+YEAR(O.order_date) as yr,
+MONTH(O.order_date) as mth,
+SUM(O.quantity * P.price) as ov_price
+From Customers C
+
+inner join Orders O on O.customer_id = C.customer_id
+inner join Product P on O.product_id = P.product_id
+
+where YEAR(O.order_date) = 2020 and MONTH(O.order_date) IN (6,7)
+
+group by C.customer_id, C.name, YEAR(O.order_date), MONTH(O.order_date)
+
+HAVING SUM(O.quantity * P.price) >= 100
+)
+
+select customer_id, name from A
+group by customer_id, name
+having COUNT(1) =2
+
+
