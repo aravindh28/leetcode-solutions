@@ -1,0 +1,43 @@
+/* Write your T-SQL query statement below */
+
+DECLARE @avg_duration FLOAT;
+SET @avg_duration = (SELECT AVG(duration * 1.0) from (SELECT caller_id,
+    callee_id,
+    duration from Calls
+
+    union all
+
+    SELECT callee_id as caller_id,
+    caller_id as callee_id,
+    duration from Calls)S );
+
+WITH All_Calls as (
+    SELECT caller_id,
+    callee_id,
+    duration from Calls
+
+    union all
+
+    SELECT callee_id as caller_id,
+    caller_id as callee_id,
+    duration from Calls 
+),
+id_country as (
+    select P.id,
+    C.name
+    from Person P
+    inner join Country C
+    on LEFT(P.phone_number,3) = C.country_code
+),
+country_avgs as (
+    SELECT I.name as country,
+    AVG(A.duration * 1.0) as cnt_avg
+    from id_country I
+    inner join All_Calls A
+    on A.caller_id = I.id
+    group by I.name
+)
+
+
+select country from country_avgs
+WHERE cnt_avg > @avg_duration
