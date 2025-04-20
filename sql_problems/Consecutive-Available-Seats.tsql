@@ -1,0 +1,26 @@
+/* Write your T-SQL query statement below */
+with A as
+
+(
+select seat_id,
+free,
+ROW_NUMBER() over (order by seat_id) as rn
+from Cinema
+),
+
+B as 
+(
+select seat_id, free, ROW_NUMBER() over (order by seat_id) - rn as rn2
+from A
+where free!= 0),
+C as (
+
+select rn2,
+count(1) as countx
+from B
+group by rn2
+having count(1) > 1
+)
+
+select seat_id from B
+where rn2 IN (select rn2 from C)
