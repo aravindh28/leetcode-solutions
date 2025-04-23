@@ -1,0 +1,8 @@
+/* Write your T-SQL query statement below */
+with d as (
+SELECT LEAD(x,1) OVER (ORDER BY x asc) - x as distance_next
+from Point)
+
+select min(distance_next) as shortest
+from d
+where distance_next is not NULL
