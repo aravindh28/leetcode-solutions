@@ -1,0 +1,14 @@
+/* Write your T-SQL query statement below */
+with P as (
+SELECT T.id,
+T.p_id,
+T1.id as child_id
+from Tree T
+left join Tree T1 on T.id = T1.p_id
+)
+
+select id,
+CASE WHEN p_id is null THEN 'Root' WHEN child_id is null THEN 'Leaf' ELSE 'Inner' END as type
+from P
+group by id, CASE WHEN p_id is null THEN 'Root' WHEN child_id is null THEN 'Leaf' ELSE 'Inner' END
+
