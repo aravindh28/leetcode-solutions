@@ -1,0 +1,20 @@
+/* Write your T-SQL query statement below */
+
+WITH Upvt as (
+SELECT
+    year,
+    tournament,
+    win_id
+from
+(SELECT * from Championships) C
+UNPIVOT
+(
+win_id for tournament in (Wimbledon, Fr_open, US_open, Au_open)
+) U
+)
+
+SELECT P.player_id, P.player_name,
+COUNT(1) as grand_slams_count
+from Players P
+inner join Upvt U on U.win_id = P.player_id
+group by P.player_id, P.player_name
