@@ -1,0 +1,5 @@
+/* Write your T-SQL query statement below */
+
+SELECT employee_id,
+COUNT(1) OVER (PARTITION BY team_id) as team_size
+from Employee
