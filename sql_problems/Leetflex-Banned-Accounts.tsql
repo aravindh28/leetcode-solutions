@@ -1,0 +1,29 @@
+/* Write your T-SQL query statement below */
+
+with lead_d as (
+select account_id,
+ip_address,
+login,
+logout,
+LEAD(login,1) over (PARTITION BY account_id order by login asc) as next_login,
+LEAD(ip_address,1) over (PARTITION BY account_id order by login asc) as next_id
+
+from LogInfo
+)
+
+--select * from lead_d where account_id = 1
+/*
+select account_id from lead_d
+where next_login >= login AND next_login <= logout AND next_id != ip_address AND next_login is not null
+group by account_id*/
+,cte2 as (
+select A.account_id,
+A.ip_address,
+B.account_id as id2,
+B.ip_address as ip2
+from Loginfo A
+inner join LogInfo B on A.account_id = B.account_id AND A.ip_address != B.ip_address and B.login >= A.login and B.login <= A.logout)
+
+select account_id
+from cte2
+group by account_id
