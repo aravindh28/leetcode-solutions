@@ -1,0 +1,10 @@
+/* Write your T-SQL query statement below */
+
+SELECT D.name as Department,
+E.name as Employee,
+E.salary as salary
+from Employee E
+inner join Department D
+on D.id = E.departmentId
+inner join (select departmentId as max_departmentId, MAX(salary) as max_salary from Employee E group by departmentId) M
+on M.max_departmentId = E.departmentId AND E.salary = M.max_salary
