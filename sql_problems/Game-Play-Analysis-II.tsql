@@ -1,0 +1,6 @@
+/* Write your T-SQL query statement below */
+SELECT
+player_id,
+device_id
+from Activity A
+inner join (select player_id as player_id_2, MIN(event_date) as min_date from Activity group by player_id) B on A.player_id = B.player_id_2 and A.event_date = B.min_date
