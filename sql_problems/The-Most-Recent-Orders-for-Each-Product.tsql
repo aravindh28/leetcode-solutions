@@ -1,0 +1,20 @@
+/* Write your T-SQL query statement below */
+
+with rank_o as (
+SELECT P.product_name,
+P.product_id,
+O.order_id,
+O.order_date,
+DENSE_RANK() OVER (PARTITION BY O.product_id ORDER BY O.order_date DESC) as RN
+from Orders O
+inner join Products P on O.product_id = P.product_id
+inner join Customers C on C.customer_id = O.customer_id
+)
+
+SELECT product_name,
+product_id,
+order_id,
+order_date
+from rank_o
+where RN = 1
+order by product_name asc, product_id asc, order_id asc
