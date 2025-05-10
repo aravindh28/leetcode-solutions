@@ -1,0 +1,24 @@
+/* Write your T-SQL query statement below */
+with orders_rn as (
+SELECT
+customer_id,
+order_id,
+order_date,
+ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY order_date desc) as rn
+from Orders),
+
+top_3_orders as (
+    SELECT customer_id,
+    order_id,
+    order_date
+    from orders_rn
+    where rn <=3
+)
+
+SELECT C.name as customer_name,
+T.customer_id,
+T.order_id,
+T.order_date
+from top_3_orders T
+inner join Customers C on C.customer_id = T.customer_id
+order by customer_name, T.customer_id, T.order_date desc
