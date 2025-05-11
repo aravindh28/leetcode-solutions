@@ -1,0 +1,12 @@
+/* Write your T-SQL query statement below */
+WITH rank_t as (
+SELECT P.project_id,
+P.employee_id,
+DENSE_RANK() OVER (PARTITION BY P.project_id ORDER BY E.experience_years DESC ) as rn
+FROM Project P
+inner join Employee E on P.employee_id = E.employee_id)
+
+SELECT project_id,
+employee_id
+from rank_t
+where rn = 1
