@@ -8,7 +8,7 @@
 8FROM
 9     Queue),
 10B as (
-11SELECT A.*,
+11SELECT A.person_name,
 12ROW_NUMBER() OVER (ORDER BY cum_weight DESC) as rn
 13FROM A
 14where cum_weight <= 1000
