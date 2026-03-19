@@ -24,9 +24,9 @@ This repository contains my solutions to LeetCode problems.
 
   ## Problem sets
 
-  ✨ **SQL 50** - In progress (49/50)
+  ✅ **SQL 50** - Completed (50/50)
 
-  ✨ **Advanced SQL 50** - In progress (45/50)
+  ✅ **Advanced SQL 50** - Completed (50/50)
 
   ---
 
